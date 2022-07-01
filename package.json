@@ -1,0 +1,28 @@
+{
+  "name": "RidewithShare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^10.3.0",
+    "cypress-file-upload": "^5.0.7",
+    "cypress-localstorage-commands": "^1.4.5",
+    "cypress-xpath": "^1.6.2",
+    "minimist": "^1.2.5",
+    "mocha": "^8.3.2",
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.2.0"
+  },
+  "dependencies": {
+    "@cypress/webpack-preprocessor": "^5.12.0",
+    "moment": "^2.29.3",
+    "webpack": "^5.73.0"
+  }
+}
