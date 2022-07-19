@@ -202,7 +202,7 @@ describe("Invitation Test Cases", function () {
     //================================== AAA -Roundtown  ============================================//
 
 
-    it("Assign organizations to a new user - AAA", function () {
+    it("Assign organizations to a new user - Development", function () {
     //     register.visit_homepage_and_close_popup()
     //   cy.get('body').then((body) => {
     //       if (body.find('[data-cy="close-btn"] > .sc-gtssRu > .sc-bXevSJ').length > 0) {
@@ -229,7 +229,8 @@ describe("Invitation Test Cases", function () {
             cy.wait(3000)
         })
         cy.wait(10000)
-        cy.getAccessToken(Cypress.env("apiURL"))
+        // cy.getAccessToken(Cypress.env("apiURL"))
+        cy.getAccessTokenByOrg(Cypress.env("apiURL"), Cypress.env("AAA_Roundtown_ID"))
     })
 
     // it("Verify organization in profile - AAA", function () {
@@ -256,7 +257,7 @@ describe("Invitation Test Cases", function () {
     //     })
     // })
 
-    it("Accept organization from profile - AAA", function () {
+    it("Accept organization from profile and validate organization - Development", function () {
         register.visit_homepage_and_close_popup()
         cy.get('body').then((body) => {
             if (body.find('[data-cy="close-btn"] > .sc-gtssRu > .sc-bXevSJ').length > 0) {
@@ -265,7 +266,8 @@ describe("Invitation Test Cases", function () {
         });
 
         cy.login(Cypress.env('newUserEmail'), this.config.password)
-        cy.wait(60000)
+        register.wait_for_loader_to_disappear()
+
         register.profile().should('be.visible').click()
         register.organization_dropdown().click().then(() => {
             cy.contains("[role=option]", Cypress.env("AAA_Roundtown_Org_Name")).click()
@@ -273,30 +275,40 @@ describe("Invitation Test Cases", function () {
             register.accept_btn().scrollIntoView().should("be.visible").click({ force: true })
             cy.wait(3000)
             cy.log(Cypress.env("AAA_Roundtown_Org_Name") + "Invitation Accepted")
+            cy.wait(10000)
+            cy.wait(20000)
+            cy.wait(20000)
+            register.wait_for_loader_to_disappear()
             homepage.homepage_logo().should("be.visible").click()
+            cy.wait(10000)
             Cypress.env("Invitation_accepted", true)
+            cy.wait(10000)
+            homepage.first_address_card_org().should("be.visible").click()
+            cy.log(homepage.first_address_card_org().text)
+            homepage.first_address_card_org().contains(Cypress.env("AAA_Roundtown_Org_Name"))
+            cy.wait(10000)
         })
     })
 
-    it("Validate address of new assigned organizations - AAA", function () {
-        register.visit_homepage_and_close_popup()
-        cy.get('body').then((body) => {
-            if (body.find('[data-cy="close-btn"] > .sc-gtssRu > .sc-bXevSJ').length > 0) {
-                cy.wait(2000)
-            }
-        });
-        cy.login(Cypress.env('newUserEmail'), this.config.password)
-        cy.wait(60000)
+    // it("Validate address of new assigned organizations - AAA", function () {
+    //     register.visit_homepage_and_close_popup()
+    //     cy.get('body').then((body) => {
+    //         if (body.find('[data-cy="close-btn"] > .sc-gtssRu > .sc-bXevSJ').length > 0) {
+    //             cy.wait(2000)
+    //         }
+    //     });
+    //     cy.login(Cypress.env('newUserEmail'), this.config.password)
+    //     register.wait_for_loader_to_disappear()
+        
+    //     homepage.homepage_logo().should("be.visible").click()
+    //     cy.wait(3000)
+    //     homepage.first_address_card_org().should("be.visible").click()
+    //     cy.log(homepage.first_address_card_org().text)
+    //     homepage.first_address_card_org().contains(Cypress.env("AAA_Roundtown_Org_Name"))
+    //     homepage.get_address_card_by_index(1).contains(Cypress.env("AAA_Roundtown_Org_Name"))
+    // })
 
-        homepage.homepage_logo().should("be.visible").click()
-        cy.wait(3000)
-        homepage.first_address_card_org().should("be.visible").click()
-        cy.log(homepage.first_address_card_org().text)
-        homepage.first_address_card_org().contains(Cypress.env("AAA_Roundtown_Org_Name"))
-        homepage.get_address_card_by_index(1).contains(Cypress.env("AAA_Roundtown_Org_Name"))
-    })
-
-    it("Delete User after assignement - AAA", function () {
+    it("Delete User after assignement - Development", function () {
         emailToCheck = Cypress.env('newUserEmail')
         cy.deleteUserbyID(emailToCheck)
 
