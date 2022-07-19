@@ -125,6 +125,10 @@ class signup {
         profile_slider() {
             return cy.get(".sc-glgZvJ")
         }
+
+        wait_for_loader_to_disappear(){
+            cy.get("[data-icon='spinner']", {timeout: 90000}).should("not.exist")
+        }
     }
 
 //}
